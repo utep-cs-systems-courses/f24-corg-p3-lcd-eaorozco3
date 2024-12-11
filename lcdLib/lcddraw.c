@@ -48,6 +48,20 @@ void clearScreen(u_int colorBGR)
   fillRectangle(0, 0, screenWidth, screenHeight, colorBGR);
 }
 
+void drawChar11x16(u_char rcol, u_char rrow, char c, u_int fgColorBGR, u_int bgColorBGR) {
+  c-= 0x20;
+  u_int bit = 0x01;
+  lcd_setArea(rcol, rrow, rcol + 10, rrow + 16);
+  for(int row = 0; row < 17; row++) {
+    for(int col = 0; col < 11; col++) {
+      u_int colorBGR = (font_11x16[c][col] & bit) ? fgColorBGR : bgColorBGR;
+      lcd_writeColor(colorBGR);
+    }
+
+    bit <<= 1;
+  }
+}
+
 /** 5x7 font - this function draws background pixels
  *  Adapted from RobG's EduKit
  */
@@ -94,6 +108,14 @@ void drawString5x7(u_char col, u_char row, char *string,
   }
 }
 
+void drawString11x16(u_char col, u_char row, char *string, u_int fgColorBGR, u_int bgColorBGR) {
+  u_char cols = col;
+  while(*string) {
+    drawChar11x16(cols, row, *string++, fgColorBGR, bgColorBGR);
+    cols += 12;
+  }
+}
+
 
 /** Draw rectangle outline
  *  
@@ -114,4 +136,3 @@ void drawRectOutline(u_char colMin, u_char rowMin, u_char width, u_char height,
   fillRectangle(colMin, rowMin, 1, height, colorBGR);
   fillRectangle(colMin + width, rowMin, 1, height, colorBGR);
 }
-

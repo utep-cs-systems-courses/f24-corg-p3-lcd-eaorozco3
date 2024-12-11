@@ -14,10 +14,14 @@ main()
   lcd_init();
   u_char width = screenWidth, height = screenHeight;
 
-  clearScreen(COLOR_BLUE);
+  clearScreen(COLOR_GREEN);
 
-  drawString5x7(20,20, "hello", COLOR_GREEN, COLOR_RED);
+  int col = 0, row = 0;
+  int centerCol = width / 2, centerRow = height / 2;
 
-  fillRectangle(30,30, 60, 60, COLOR_ORANGE);
+  //drawString5x7(20,20, "hello", COLOR_GREEN, COLOR_RED);
+  drawString11x16(centerCol, centerRow, "Hello", COLOR_RED, COLOR_GREEN);
+
+  //fillRectangle(30,30, 60, 60, COLOR_ORANGE);
   
 }
